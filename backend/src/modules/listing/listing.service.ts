@@ -4,7 +4,7 @@ import NotFoundError from "../../common/error/not-found-error";
 import { newListingNearbyTemplate } from "../notification/email-templates";
 import { findUsersNearLocation } from "../user/user.service";
 import { sendEmail } from "../notification/notification.service";
-import { QueryFilter } from "mongoose"; 
+import { QueryFilter } from "mongoose";
 
 type CreateListingInput = {
   itemDescription: string;
@@ -52,7 +52,7 @@ type FeedFilters = {
 };
 
 const getFeed = async (filters: FeedFilters) => {
-  const query: QueryFilter<IListing> = {  
+  const query: QueryFilter<IListing> = {
     state: "active",
     location: {
       $near: {
@@ -73,7 +73,7 @@ const getFeed = async (filters: FeedFilters) => {
 };
 
 const getListingById = async (id: string) => {
-  const listing = await Listing.findById(id);
+  const listing = await Listing.findById(id).populate("vendorId", "businessName address");
   if (!listing) throw new NotFoundError("Listing not found");
   return listing;
 };
