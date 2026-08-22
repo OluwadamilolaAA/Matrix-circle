@@ -57,9 +57,13 @@ const getVendorDashboard = async (vendorId: string) => {
     state: { $in: ["expired_unclaimed", "expired_no_show"] },
   });
 
+  const claimedItems = claimStats?.claimedItems ?? 0;
+  const pickedUpItems = claimStats?.pickedUpItems ?? 0;
+
   return {
-    claimedItems: claimStats?.claimedItems ?? 0,
-    pickedUpItems: claimStats?.pickedUpItems ?? 0,
+    claimed: claimedItems,   
+    claimedItems,            
+    pickedUpItems,
     discarded,
   };
 };
